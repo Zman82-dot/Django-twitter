@@ -48,24 +48,24 @@
 
 
 
-    <div class="block">
+    <div class="block" box-shadow: 5px 5px 5px rgb(138, 137, 137)>
         <a href="{% url 'dwitter:profile_list' %}">
-            <button class="button is-dark is-outlined is-fullwidth">
+            <button class="button is-dark is-outlined is-fullwidth" style="background-image:linear-gradient(rgb(231, 98, 231),purple,rgb(32, 3, 70));color:whitesmoke; margin:20px;" >
                 All Profiles
             </button>
         </a>
     </div>
 
-    <div class="block">
+    <div class="card" style="box-shadow: 5px 5px 5px rgb(138, 137, 137)">
         <h3 class="title is-4">
             {{profile.user.username}} follows:
         </h3>
-        <div class="content">
+        <div class="card-content" style="box-shadow: 5px 5px 5px rgb(138, 137, 137)">
             <ul>
             {% for following in profile.follows.all %}
                 <li>
                     <a href="{% url 'dwitter:profile' following.id %}">
-                        {{ following }}
+                        👥  {{ following }}
                     </a>
                 </li>
             {% endfor %}
@@ -73,16 +73,16 @@
         </div>
     </div>
 
-    <div class="block">
+    <div class="card" style="padding: 20px;box-shadow: 5px 5px 5px rgb(138, 137, 137)">
         <h3 class="title is-4">
             {{profile.user.username}} is followed by:
         </h3>
-        <div class="content">
+        <div class="content" style="box-shadow: 5px 5px 5px rgb(138, 137, 137)">
             <ul>
             {% for follower in profile.followed_by.all %}
                 <li>
                     <a href="{% url 'dwitter:profile' follower.id %}">
-                        {{ follower }}
+                        👤 {{ follower }}
                     </a>
                 </li>
             {% endfor %}

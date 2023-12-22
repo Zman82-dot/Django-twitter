@@ -2,23 +2,30 @@ from django.shortcuts import render
 from .models import Profile
 from .forms import DweetForm
 from django.shortcuts import render, redirect
-
+from .models import Dweet, Profile
 # dwitter/views.py
 
 from django.shortcuts import render
 
 # dwitter/views.py
-
 def dashboard(request):
+    form = DweetForm(request.POST or None)
     if request.method == "POST":
-        form = DweetForm(request.POST)
         if form.is_valid():
             dweet = form.save(commit=False)
             dweet.user = request.user
             dweet.save()
             return redirect("dwitter:dashboard")
-    form = DweetForm()
-    return render(request, "dashboard.html", {"form": form})
+
+    followed_dweets = Dweet.objects.filter(
+        user__profile__in=request.user.profile.follows.all()
+    ).order_by("-created_at")
+
+    return render(
+        request,
+        "dashboard.html",
+        {"form": form, "dweets": followed_dweets},
+    )
 
 def profile_list(request):
     profiles = Profile.objects.exclude(user=request.user)
